@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { authAPI } from '../src/services/api';
+import { superadminAPI } from '../src/services/api';
 
 function SuperAdminDashboard() {
     const [pendingAdmins, setPendingAdmins] = useState([]);
@@ -17,7 +17,7 @@ function SuperAdminDashboard() {
 
     const fetchPromotableUsers = async () => {
         try {
-            const response = await authAPI.getPromotableUsers();
+            const response = await superadminAPI.getPromotableUsers();
             setPromotableUsers(response.data);
         } catch (error) {
             setError('Failed to fetch promotable users');
@@ -27,9 +27,9 @@ function SuperAdminDashboard() {
     const fetchData = async () => {
         try {
             const [pendingResponse, adminsResponse, statsResponse] = await Promise.all([
-                authAPI.getPendingAdmins(),
-                authAPI.getAllAdmins(),
-                authAPI.getSuperadminStats()
+                superadminAPI.getPendingAdmins(),
+                superadminAPI.getAdmins(),
+                superadminAPI.getStats()
             ]);
             
             setPendingAdmins(pendingResponse.data);
@@ -44,7 +44,7 @@ function SuperAdminDashboard() {
 
     const handleApprove = async (userId) => {
         try {
-            await authAPI.approveAdmin(userId);
+            await superadminAPI.approveAdmin(userId);
             fetchData();
         } catch (error) {
             setError('Failed to approve admin registration' , error);
@@ -53,7 +53,7 @@ function SuperAdminDashboard() {
 
     const handleReject = async (userId) => {
         try {
-            await authAPI.rejectAdmin(userId);
+            await superadminAPI.rejectAdmin(userId);
             fetchData();
         } catch (error) {
             setError('Failed to reject admin registration' , error);
@@ -62,7 +62,7 @@ function SuperAdminDashboard() {
 
     const handleRevoke = async (userId) => {
         try {
-            await authAPI.revokeAdmin(userId);
+            await superadminAPI.revokeAdmin(userId);
             fetchData();
         } catch (error) {
             setError('Failed to revoke admin privileges' , error);
@@ -71,7 +71,7 @@ function SuperAdminDashboard() {
 
     const handlePromote = async (userId) => {
         try {
-            await authAPI.promoteToAdmin(userId);
+            await superadminAPI.promoteToAdmin(userId);
             fetchPromotableUsers();
             fetchData(); // Refresh all data
         } catch (error) {
