@@ -1,13 +1,15 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from './context/AuthContext';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import Dashboard from '../pages/Dashboard';
-import Home from '../pages/Home';
-import AdminDashboard from '../pages/AdminDashboard';
-import SuperAdminDashboard from '../pages/SuperAdminDashboard';
-import UserFiles from '../pages/UserFiles';
+import { lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
+
+const Login = lazy(() => import('../pages/Login'));
+const Register = lazy(() => import('../pages/Register'));
+const Dashboard = lazy(() => import('../pages/Dashboard'));
+const Home = lazy(() => import('../pages/Home'));
+const AdminDashboard = lazy(() => import('../pages/AdminDashboard'));
+const SuperAdminDashboard = lazy(() => import('../pages/SuperAdminDashboard'));
+const UserFiles = lazy(() => import('../pages/UserFiles'));
 
 function App() {
   const { user, loading } = useAuth();
@@ -27,19 +29,51 @@ function App() {
         <Routes>
           {!user ? (
             <>
-              <Route path="/" element={<Home />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
+              <Route path="/" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Home />
+                </Suspense>
+              } />
+              <Route path="/login" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Login />
+                </Suspense>
+              } />
+              <Route path="/register" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Register />
+                </Suspense>
+              } />
               <Route path="*" element={<Navigate to="/" replace />} />
             </>
           ) : (
             <>
               <Route path="/" element={<Navigate to="/home" replace />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/admindashboard" element={<AdminDashboard />} />
-              <Route path="/superadmin-dashboard" element={<SuperAdminDashboard />} />
-              <Route path="/user-files/:userId" element={<UserFiles />} />
+              <Route path="/home" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Home />
+                </Suspense>
+              } />
+              <Route path="/dashboard" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <Dashboard />
+                </Suspense>
+              } />
+              <Route path="/admindashboard" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <AdminDashboard />
+                </Suspense>
+              } />
+              <Route path="/superadmin-dashboard" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <SuperAdminDashboard />
+                </Suspense>
+              } />
+              <Route path="/user-files/:userId" element={
+                <Suspense fallback={<div>Loading...</div>}>
+                  <UserFiles />
+                </Suspense>
+              } />
               <Route path="*" element={<Navigate to="/home" replace />} />
             </>
           )}
