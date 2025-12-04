@@ -3,6 +3,7 @@ import { useAuth } from './context/AuthContext';
 import { lazy, Suspense } from 'react';
 import Navigation from './components/Navigation';
 
+
 const Login = lazy(() => import('../pages/Login'));
 const Register = lazy(() => import('../pages/Register'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
