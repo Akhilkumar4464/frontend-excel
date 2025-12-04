@@ -59,7 +59,7 @@ function App() {
                   <Dashboard />
                 </Suspense>
               } />
-              <Route path="/admindashboard" element={
+              <Route path="/admin-dashboard" element={
                 <Suspense fallback={<div>Loading...</div>}>
                   <AdminDashboard />
                 </Suspense>

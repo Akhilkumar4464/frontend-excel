@@ -5,7 +5,6 @@ import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Toolti
 import { excelAPI } from '../src/services/api';
 import { Canvas } from '@react-three/fiber';
 import { OrbitControls, Text, Box, Sphere } from '@react-three/drei';
-import * as THREE from 'three';
 
 ChartJS.register(
   CategoryScale,
@@ -26,48 +25,29 @@ export default function EnhancedDashboard() {
   const [selectedXAxis, setSelectedXAxis] = useState('');
   const [selectedYAxis, setSelectedYAxis] = useState('');
   const [selectedZAxis, setSelectedZAxis] = useState('');
-  const [chartType, setChartType] = useState('pie');
+  const [chartType] = useState('pie');
   const [is3DMode, setIs3DMode] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        setLoading(true);
         const fileId = location.state?.fileId;
-        
+
         if (fileId) {
           const response = await excelAPI.getFile(fileId);
           setExcelData(response.data.data || []);
         } else {
           setExcelData([]);
         }
-        setLoading(false);
       } catch (err) {
-        setError(err.message || 'Error fetching data');
-        setLoading(false);
+        console.error(err.message || 'Error fetching data');
       }
     };
-    
+
     fetchData();
   }, [location.state?.fileId]);
 
-  const getNumericColumns = () => {
-    if (excelData.length === 0) return [];
-    const firstRow = excelData[0];
-    return Object.keys(firstRow).filter(key =>
-      typeof firstRow[key] === 'number' || !isNaN(parseFloat(firstRow[key]))
-    );
-  };
 
-  const getCategoricalColumns = () => {
-    if (excelData.length === 0) return [];
-    const firstRow = excelData[0];
-    return Object.keys(firstRow).filter(key =>
-      typeof firstRow[key] === 'string'
-    );
-  };
 
   const processDataFor3D = () => {
     if (!excelData || excelData.length === 0) return [];

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import { userAPI } from '../src/services/api';
 
@@ -17,7 +17,7 @@ function UserFiles() {
             const response = await userAPI.getUserDetails(userId);
             setFiles(response.data.excelFiles);
             setLoading(false);
-        } catch (err) {
+        } catch {
             setError('Failed to fetch user files');
             setLoading(false);
         }

@@ -17,7 +17,7 @@ function AdminDashboard() {
             const response = await userAPI.getUsersWithFiles();
             setUsers(response.data);
             setLoading(false);
-        } catch (err) {
+        } catch {
             setError('Failed to fetch users');
             setLoading(false);
         }

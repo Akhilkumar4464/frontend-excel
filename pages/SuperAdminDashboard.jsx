@@ -36,8 +36,8 @@ function SuperAdminDashboard() {
             setAllAdmins(adminsResponse.data);
             setStats(statsResponse.data);
             setLoading(false);
-        } catch (error) {
-            setError('Failed to fetch data' , error);
+        } catch {
+            setError('Failed to fetch data');
             setLoading(false);
         }
     };
@@ -55,8 +55,8 @@ function SuperAdminDashboard() {
         try {
             await superadminAPI.rejectAdmin(userId);
             fetchData();
-        } catch (error) {
-            setError('Failed to reject admin registration' , error);
+        } catch {
+            setError('Failed to reject admin registration');
         }
     };
 
@@ -64,8 +64,8 @@ function SuperAdminDashboard() {
         try {
             await superadminAPI.revokeAdmin(userId);
             fetchData();
-        } catch (error) {
-            setError('Failed to revoke admin privileges' , error);
+        } catch {
+            setError('Failed to revoke admin privileges');
         }
     };
 
