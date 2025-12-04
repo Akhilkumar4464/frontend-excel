@@ -4,7 +4,7 @@ import { Pie, Bar, Line, Doughnut } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend, ArcElement, PointElement, LineElement } from 'chart.js';
 import { excelAPI } from '../src/services/api';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Text, Box, Sphere } from '@react-three/drei';
+import { OrbitControls, Box, Sphere } from '@react-three/drei';
 
 ChartJS.register(
   CategoryScale,
@@ -84,15 +84,6 @@ export default function EnhancedDashboard() {
             >
               <meshStandardMaterial color={item.color} />
             </Box>
-            <Text
-              position={[0, item.y / maxValue * 2.5 + 0.5, 0]}
-              fontSize={0.3}
-              color="white"
-              anchorX="center"
-              anchorY="middle"
-            >
-              {item.label.toString()}
-            </Text>
           </group>
         ))}
         

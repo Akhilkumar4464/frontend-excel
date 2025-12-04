@@ -1,6 +1,6 @@
 import React, { useRef, useMemo, useState } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { OrbitControls, Text, Box, Sphere, Plane } from '@react-three/drei';
+import { OrbitControls, Box, Sphere, Plane } from '@react-three/drei';
 import * as THREE from 'three';
 import html2canvas from 'html2canvas';
 import { jsPDF } from 'jspdf';
@@ -57,15 +57,6 @@ const ThreeDChart = ({
         >
           <meshStandardMaterial color={item.color} />
         </Box>
-        <Text
-          position={[0, item.y + 0.5, 0]}
-          fontSize={0.3}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {item.label.toString()}
-        </Text>
       </group>
     ));
   };
@@ -79,15 +70,6 @@ const ThreeDChart = ({
         >
           <meshStandardMaterial color={item.color} />
         </Sphere>
-        <Text
-          position={[item.x, item.y + 0.5, item.z]}
-          fontSize={0.2}
-          color="white"
-          anchorX="center"
-          anchorY="middle"
-        >
-          {item.label.toString()}
-        </Text>
       </group>
     ));
   };
